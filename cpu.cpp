@@ -92,7 +92,18 @@ void string_tokenizer(string s){
 }
 
 void compute (int PC, int opcode, int operand){
-    
+    operations operation; 
+    operation.singular = opcode;
+
+    if(operation.registerO.registerInstruction >= 12 && operation.registerO.registerInstruction <= 17){
+        
+    }
+    else if(operation.trapO.trapInstruction >= 6 && operation.trapO.trapInstruction <= 10){
+
+    }
+    else {
+
+    }
 }
 
 
