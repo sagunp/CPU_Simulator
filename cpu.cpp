@@ -36,7 +36,7 @@ union operations
 
 
 string memory[1000];
-uint16_t registers[4] = {0, 0, 0, 0};
+int16_t registers[4] = {0, 0, 0, 0};
 
 void printRegisters()
 {
@@ -91,12 +91,64 @@ void string_tokenizer(string s){
     }
 }
 
+void invert(int r){
+    registers[r] = ~(registers[r]);
+}
+
+void ASL(int r){
+    registers[r] = registers[r] << 1;
+}
+
+void ASR(int r){
+    registers[r] = registers[r] >> 1;
+}
+
+void LSL(int r){
+    int16_t a = registers[r] << 1;
+    int16_t b = registers[r] >> 15;
+
+    registers[r] = a | b;
+}
+
+void LSR(int r){
+    int16_t a = registers[r] >> 1;
+    int16_t b = registers[r] << 15;
+
+    registers[r] = a | b;
+}
+
+
+
 void compute (int PC, int opcode, int operand){
     operations operation; 
     operation.singular = opcode;
+    registers[2] = PC;
 
     if(operation.registerO.registerInstruction >= 12 && operation.registerO.registerInstruction <= 17){
-        
+        int instruction = operation.registerO.registerInstruction;
+        int r =  operation.registerO.r;
+
+        switch(instruction){
+            case 12: 
+                invert(r);
+                break;
+            case 14:
+                ASL(r);
+                break;
+            case 15:
+                ASR(r);
+                break;
+            case 16:
+                LSL(r);
+                break;
+            case 17: 
+                LSR(r);
+                break;
+            default:
+                cout<<"Some issues on register intructions"<<endl;
+                break;
+        }
+
     }
     else if(operation.trapO.trapInstruction >= 6 && operation.trapO.trapInstruction <= 10){
 
@@ -109,6 +161,7 @@ void compute (int PC, int opcode, int operand){
 
 int main()
 {
+    registers[3] = 900;
     string input;
     cout<<"Please type in the commands separated by spaces. For Example: 1F2ED5 1CEE98 00 7 zz."<<endl;
     getline (cin, input);
