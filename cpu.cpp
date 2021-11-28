@@ -54,6 +54,7 @@ void printRegisters()
     cout << "index register: " << registers[1] << endl;
     cout << "program counter: " << registers[2] << endl;
     cout << "stack pointer: " << registers[3] << endl;
+    cout<<endl;
 }
 
 int convertToDecimal(string hexcode)
@@ -376,7 +377,7 @@ int main()
 {
     registers[3] = 900;
     string input;
-    cout<<"Please type in valid commands in this format:command1 command2 00 hexData1 hexData2 hexData3 zz. For Example:C00049 D803EF 00 7 8 9 zz."<<endl;
+    cout<<"Please type in valid commands in this format:command1 commandN 00 hexData1 hexData2 hexDataN zz. For Example:C10003 1C 00 7 8 9 zz."<<endl;
     getline (cin, input);
 
     string_tokenizer(input);
