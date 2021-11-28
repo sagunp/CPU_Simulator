@@ -307,7 +307,7 @@ void compute (int PC, int opcode, string operandString){
                 rotateR(r);
                 break;
             default:
-                cout<<"Some issues on register intructions"<<endl;
+                cout<<"Some issues on register intructions with program number: "<<PC<<endl;
                 break;
         }
 
@@ -330,7 +330,7 @@ void compute (int PC, int opcode, string operandString){
                 charoTrap(addressing, operandInt);
                 break;
             default:
-                cout<<"Some issues on trap intructions"<<endl;
+                cout<<"Some issues on trap intructions with program number: "<<PC<<endl;
                 break;
         }
 
@@ -366,7 +366,7 @@ void compute (int PC, int opcode, string operandString){
                 storeByteR(r, operandInt);
                 break;
             default:
-                cout<<"Some issues on trap intructions"<<endl;
+                cout<<"Some issues on regular intructions with program number: "<<PC<<endl;
                 break;
         }
     }
@@ -376,24 +376,38 @@ void compute (int PC, int opcode, string operandString){
 int main()
 {
     registers[3] = 900;
-    string input;
-    cout<<"Please type in the commands separated by spaces. For Example: 1F2ED5 1CEE98 00 7 zz."<<endl;
-    getline (cin, input);
+    // string input;
+    // cout<<"Please type in the commands separated by spaces. For Example: 1F2ED5 1CEE98 00 7 zz."<<endl;
+    // getline (cin, input);
 
-    string_tokenizer(input);
+    // string_tokenizer(input);
 
-    int i = 0; 
-    while(memory[i] != "00"){
-        string operation = memory[i];
-        string opcodeString = operation.substr(0, 2);
-        string operandString = operation.substr(2, 4);
+    // int i = 0; 
+    // while(memory[i] != "00"){
+    //     string operation = memory[i];
+    //     string opcodeString = operation.substr(0, 2);
+    //     string operandString = "0000";
 
-        int opcode = convertToDecimal(opcodeString);
+    //     if(operation.length() == 6) operandString = operation.substr(2, 6);
+    //     int opcode = convertToDecimal(opcodeString);
 
-        compute(i, opcode, operandString);
-        printRegisters();
-        i++;
-    }
+    //     compute(i, opcode, operandString);
+    //     printRegisters();
+    //     i++;
+    // }
+    memory[0] = "D803E9";
+    registers[0] = 54;
+    registers[1] = 88;
+    memory[1] = "3E8";
+    string operation = memory[0];
+    string opcodeString = operation.substr(0, 2);
+    string operandString = "0000";
 
+    if(operation.length() == 6) operandString = operation.substr(2, 6);
+
+    int opcode = convertToDecimal(opcodeString);
+    
+    compute(0, opcode, operandString);
+    printRegisters();
     return 0;
 }
